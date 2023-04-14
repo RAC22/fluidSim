@@ -1,7 +1,16 @@
+@font-face {
+	font-family: "russo_oneregular";
+	src: url("../font/russoone-regular-webfont.woff2") format("woff2"),
+		url("../font/russoone-regular-webfont.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
 html,
 body {
 	overflow: hidden;
 	background-color: #000;
+	font-family: "russo_oneregular";
 }
 
 body {
@@ -21,4 +30,28 @@ div {
 	color: white;
 	position: relative;
 	z-index: 1;
+}
+
+.container {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	block-size: fit-content;
+	width: fit-content;
+	margin-top: 48vh;
+}
+
+@keyframes fadeIn {
+	0%,
+	100% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+h1 {
+	animation: fadeIn 5s linear forwards;
 }
