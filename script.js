@@ -22,23 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-"use strict";
-
-// Mobile promo section
-
-const promoPopup = document.getElementsByClassName("promo")[0];
-const promoPopupClose = document.getElementsByClassName("promo-close")[0];
-
-if (isMobile()) {
-	setTimeout(() => {
-		promoPopup.style.display = "table";
-	}, 20000);
-}
-
-promoPopupClose.addEventListener("click", (e) => {
-	promoPopup.style.display = "none";
-});
-
 // Simulation section
 
 const canvas = document.getElementsByTagName("canvas")[0];
@@ -101,7 +84,7 @@ if (!ext.supportLinearFiltering) {
 	config.SUNRAYS = false;
 }
 
-//startGUI();
+startGUI();
 
 function getWebGLContext(canvas) {
 	const params = {
@@ -1689,9 +1672,9 @@ canvas.addEventListener("mousemove", (e) => {
 	updatePointerMoveData(pointer, posX, posY);
 });
 
-window.addEventListener("mouseup", () => {
-	updatePointerUpData(pointers[0]);
-});
+// window.addEventListener("mouseup", () => {
+// 	updatePointerUpData(pointers[0]);
+// });
 
 canvas.addEventListener("touchstart", (e) => {
 	e.preventDefault();
