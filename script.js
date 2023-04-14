@@ -25,6 +25,7 @@ SOFTWARE.
 // Simulation section
 
 const canvas = document.getElementsByTagName("canvas")[0];
+
 resizeCanvas();
 
 let config = {
@@ -36,7 +37,7 @@ let config = {
 	PRESSURE: 0.1,
 	PRESSURE_ITERATIONS: 20,
 	CURL: 15,
-	SPLAT_RADIUS: 0.25,
+	SPLAT_RADIUS: 0.2,
 	SPLAT_FORCE: 6000,
 	SHADING: true,
 	COLORFUL: true,
@@ -52,7 +53,7 @@ let config = {
 	BLOOM_SOFT_KNEE: 0.7,
 	SUNRAYS: true,
 	SUNRAYS_RESOLUTION: 196,
-	SUNRAYS_WEIGHT: 0.6,
+	SUNRAYS_WEIGHT: 0.4,
 };
 
 function pointerPrototype() {
@@ -232,12 +233,7 @@ function startGUI() {
 		.onFinishChange(updateKeywords);
 	sunraysFolder.add(config, "SUNRAYS_WEIGHT", 0.3, 1.0).name("weight");
 
-	let captureFolder = gui.addFolder("Capture");
-	captureFolder.addColor(config, "BACK_COLOR").name("background color");
-	captureFolder.add(config, "TRANSPARENT").name("transparent");
-	captureFolder.add({ fun: captureScreenshot }, "fun").name("take screenshot");
-
-	if (isMobile()) gui.close();
+	gui.close();
 }
 
 function isMobile() {
@@ -304,15 +300,6 @@ function textureToCanvas(texture, width, height) {
 	ctx.putImageData(imageData, 0, 0);
 
 	return captureCanvas;
-}
-
-function downloadURI(filename, uri) {
-	let link = document.createElement("a");
-	link.download = filename;
-	link.href = uri;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
 }
 
 class Material {
