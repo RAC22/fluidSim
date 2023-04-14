@@ -1,7 +1,7 @@
 @font-face {
 	font-family: "russo_oneregular";
-	src: url("../font/russoone-regular-webfont.woff2") format("woff2"),
-		url("../font/russoone-regular-webfont.woff") format("woff");
+	src: url("./font/russoone-regular-webfont.woff2") format("woff2"),
+		url("./font/russoone-regular-webfont.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
 }
