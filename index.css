@@ -8,7 +8,6 @@
 
 html,
 body {
-	overflow: hidden;
 	background-color: #000;
 	font-family: "russo_oneregular";
 }
@@ -43,15 +42,29 @@ div {
 }
 
 @keyframes fadeIn {
-	0%,
-	100% {
+	0% {
 		opacity: 0;
 	}
-	50% {
+	100% {
 		opacity: 1;
 	}
 }
 
 h1 {
-	animation: fadeIn 5s linear forwards;
+	animation: fadeIn 2s linear forwards;
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.hidden {
+	display: none;
+}
+header {
+	position: relative;
+	z-index: 1;
 }

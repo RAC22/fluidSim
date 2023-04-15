@@ -32,16 +32,16 @@ let config = {
 	SIM_RESOLUTION: 256,
 	DYE_RESOLUTION: 1024,
 	CAPTURE_RESOLUTION: 512,
-	DENSITY_DISSIPATION: 2,
-	VELOCITY_DISSIPATION: 0.2,
+	DENSITY_DISSIPATION: 1,
+	VELOCITY_DISSIPATION: 0.1,
 	PRESSURE: 0.1,
 	PRESSURE_ITERATIONS: 20,
 	CURL: 15,
-	SPLAT_RADIUS: 0.2,
-	SPLAT_FORCE: 6000,
+	SPLAT_RADIUS: 0.15,
+	SPLAT_FORCE: 3000,
 	SHADING: true,
 	COLORFUL: true,
-	COLOR_UPDATE_SPEED: 10,
+	COLOR_UPDATE_SPEED: 1,
 	PAUSED: false,
 	BACK_COLOR: { r: 0, g: 0, b: 0 },
 	TRANSPARENT: false,
@@ -49,11 +49,11 @@ let config = {
 	BLOOM_ITERATIONS: 8,
 	BLOOM_RESOLUTION: 256,
 	BLOOM_INTENSITY: 0.2,
-	BLOOM_THRESHOLD: 0.2,
-	BLOOM_SOFT_KNEE: 0.7,
+	BLOOM_THRESHOLD: 1,
+	BLOOM_SOFT_KNEE: 0.2,
 	SUNRAYS: true,
-	SUNRAYS_RESOLUTION: 196,
-	SUNRAYS_WEIGHT: 0.4,
+	SUNRAYS_RESOLUTION: 128,
+	SUNRAYS_WEIGHT: 1,
 };
 
 function pointerPrototype() {
@@ -92,7 +92,7 @@ function getWebGLContext(canvas) {
 		alpha: true,
 		depth: false,
 		stencil: false,
-		antialias: false,
+		antialias: true,
 		preserveDrawingBuffer: false,
 	};
 
@@ -211,7 +211,7 @@ function startGUI() {
 		.add(
 			{
 				fun: () => {
-					splatStack.push(parseInt(Math.random() * 20) + 5);
+					splatStack.push(parseInt(Math.random() * 20) * 5);
 				},
 			},
 			"fun"
@@ -238,27 +238,6 @@ function startGUI() {
 
 function isMobile() {
 	return /Mobi|Android/i.test(navigator.userAgent);
-}
-
-function captureScreenshot() {
-	let res = getResolution(config.CAPTURE_RESOLUTION);
-	let target = createFBO(
-		res.width,
-		res.height,
-		ext.formatRGBA.internalFormat,
-		ext.formatRGBA.format,
-		ext.halfFloatTexType,
-		gl.NEAREST
-	);
-	render(target);
-
-	let texture = framebufferToTexture(target);
-	texture = normalizeTexture(texture, target.width, target.height);
-
-	let captureCanvas = textureToCanvas(texture, target.width, target.height);
-	let datauri = captureCanvas.toDataURL();
-	downloadURI("fluid.png", datauri);
-	URL.revokeObjectURL(datauri);
 }
 
 function framebufferToTexture(target) {
@@ -1290,7 +1269,7 @@ function updateKeywords() {
 
 updateKeywords();
 initFramebuffers();
-multipleSplats(parseInt(Math.random() * 20) + 5);
+multipleSplats(parseInt(Math.random() * 20) * 5);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
