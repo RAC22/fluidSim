@@ -68,3 +68,6 @@ header {
 	position: relative;
 	z-index: 1;
 }
+button {
+	opacity: 0.3;
+}

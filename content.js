@@ -21,6 +21,4 @@ document.addEventListener("wheel", (event) => {
 			sections[i].classList.add("hidden");
 		}
 	}
-	// Prevent default scroll behavior
-	event.preventDefault();
 });

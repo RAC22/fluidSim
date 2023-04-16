@@ -47,7 +47,7 @@ let config = {
 	TRANSPARENT: false,
 	BLOOM: true,
 	BLOOM_ITERATIONS: 8,
-	BLOOM_RESOLUTION: 256,
+	BLOOM_RESOLUTION: 128,
 	BLOOM_INTENSITY: 0.2,
 	BLOOM_THRESHOLD: 1,
 	BLOOM_SOFT_KNEE: 0.2,
@@ -184,56 +184,157 @@ function supportRenderTextureFormat(gl, internalFormat, format, type) {
 }
 
 function startGUI() {
-	var gui = new dat.GUI({ width: 300 });
-	gui
-		.add(config, "DYE_RESOLUTION", {
-			high: 1024,
-			medium: 512,
-			low: 256,
-			"very low": 128,
-		})
-		.name("quality")
-		.onFinishChange(initFramebuffers);
-	gui
-		.add(config, "SIM_RESOLUTION", { 32: 32, 64: 64, 128: 128, 256: 256 })
-		.name("sim resolution")
-		.onFinishChange(initFramebuffers);
-	gui.add(config, "DENSITY_DISSIPATION", 0, 4.0).name("density diffusion");
-	gui.add(config, "VELOCITY_DISSIPATION", 0, 4.0).name("velocity diffusion");
-	gui.add(config, "PRESSURE", 0.0, 1.0).name("pressure");
-	gui.add(config, "CURL", 0, 50).name("vorticity").step(1);
-	gui.add(config, "SPLAT_RADIUS", 0.01, 1.0).name("splat radius");
-	gui.add(config, "SHADING").name("shading").onFinishChange(updateKeywords);
-	gui.add(config, "COLORFUL").name("colorful");
-	gui.add(config, "PAUSED").name("paused").listen();
-
-	gui
-		.add(
-			{
-				fun: () => {
-					splatStack.push(parseInt(Math.random() * 20) * 5);
-				},
-			},
-			"fun"
+	let resMap = {
+		high: 1024,
+		medium: 512,
+		low: 256,
+		"very low": 128,
+	};
+	let backMap = {
+		1024: "high",
+		512: "medium",
+		256: "low",
+		128: "very low",
+	};
+	let qualitySelect = document.getElementById("qualitySelect");
+	qualitySelect.value = backMap[config.DYE_RESOLUTION];
+	qualitySelect.addEventListener(
+		"change",
+		(event) => (
+			(config.DYE_RESOLUTION = resMap[event.target.value]), initFramebuffers()
 		)
-		.name("Random splats");
+	);
+	let simRes = document.getElementById("simRes");
+	simRes.value = config.SIM_RESOLUTION;
+	simRes.addEventListener(
+		"change",
+		(event) => (
+			(config.SIM_RESOLUTION = event.target.value), initFramebuffers()
+		)
+	);
+	let dissiptation = document.getElementById("dissipation");
+	dissiptation.value = config.DENSITY_DISSIPATION;
+	dissiptation.addEventListener(
+		"change",
+		(event) => (config.DENSITY_DISSIPATION = event.target.value)
+	);
+	let pressure = document.getElementById("pressure");
+	pressure.value = config.PRESSURE;
+	pressure.addEventListener(
+		"change",
+		(event) => (config.PRESSURE = event.target.value)
+	);
+	let curl = document.getElementById("vorticity");
+	curl.value = config.CURL;
+	curl.addEventListener(
+		"change",
+		(event) => (config.CURL = event.target.value)
+	);
+	let size = document.getElementById("size");
+	size.value = config.SPLAT_RADIUS;
+	size.addEventListener(
+		"change",
+		(event) => (config.SPLAT_RADIUS = event.target.value)
+	);
+	let shading = document.getElementById("shading");
+	shading.checked = config.SHADING;
+	shading.addEventListener(
+		"change",
+		(event) => (config.SHADING = event.target.checked)
+	);
+	let colorRotation = document.getElementById("colorful");
+	colorRotation.checked = config.COLORFUL;
+	colorRotation.addEventListener(
+		"change",
+		(event) => (config.COLORFUL = event.target.checked)
+	);
+	let paused = document.getElementById("paused");
+	paused.checked = config.PAUSED;
+	paused.addEventListener(
+		"change",
+		(event) => (config.PAUSED = event.target.checked)
+	);
+	let bloomOn = document.getElementById("bloomEnable");
+	bloomOn.checked = config.BLOOM;
+	bloomOn.addEventListener(
+		"change",
+		(event) => (config.BLOOM = event.target.checked)
+	);
+	let bloomIntensity = document.getElementById("bloomIntensity");
+	bloomIntensity.value = config.BLOOM_INTENSITY;
+	bloomIntensity.addEventListener(
+		"change",
+		(event) => (config.BLOOM_INTENSITY = event.target.value)
+	);
+	let bloomThreshold = document.getElementById("bloomThreshold");
+	bloomThreshold.value = config.BLOOM_THRESHOLD;
+	bloomThreshold.addEventListener(
+		"change",
+		(event) => (config.BLOOM_THRESHOLD = event.target.value)
+	);
+	let sunraysOn = document.getElementById("sunraysEnable");
+	sunraysOn.checked = config.SUNRAYS;
+	sunraysOn.addEventListener(
+		"change",
+		(event) => (config.SUNRAYS = event.target.checked)
+	);
+	let sunraysWeight = document.getElementById("sunrayWeight");
+	sunraysWeight.value = config.SUNRAYS_WEIGHT;
+	sunraysWeight.addEventListener(
+		"change",
+		(event) => (config.SUNRAYS_WEIGHT = event.target.value)
+	);
+	var defaults = JSON.parse(JSON.stringify(config));
+	// var gui = new dat.GUI({ width: 300 });
+	// gui
+	// 	.add(config, "DYE_RESOLUTION", {
+	// 		high: 1024,
+	// 		medium: 512,
+	// 		low: 256,
+	// 		"very low": 128,
+	// 	})
+	// 	.name("quality")
+	// 	.onFinishChange(initFramebuffers);
+	// gui
+	// 	.add(config, "SIM_RESOLUTION", { 32: 32, 64: 64, 128: 128, 256: 256 })
+	// 	.name("sim resolution")
+	// 	.onFinishChange(initFramebuffers);
+	// gui.add(config, "DENSITY_DISSIPATION", 0, 4.0).name("density diffusion");
+	// gui.add(config, "VELOCITY_DISSIPATION", 0, 4.0).name("velocity diffusion");
+	// gui.add(config, "PRESSURE", 0.0, 1.0).name("pressure");
+	// gui.add(config, "CURL", 0, 50).name("vorticity").step(1);
+	// gui.add(config, "SPLAT_RADIUS", 0.01, 1.0).name("splat radius");
+	// gui.add(config, "SHADING").name("shading").onFinishChange(updateKeywords);
+	// gui.add(config, "COLORFUL").name("colorful");
+	// gui.add(config, "PAUSED").name("paused").listen();
 
-	let bloomFolder = gui.addFolder("Bloom");
-	bloomFolder
-		.add(config, "BLOOM")
-		.name("enabled")
-		.onFinishChange(updateKeywords);
-	bloomFolder.add(config, "BLOOM_INTENSITY", 0.1, 2.0).name("intensity");
-	bloomFolder.add(config, "BLOOM_THRESHOLD", 0.0, 1.0).name("threshold");
+	// gui
+	// 	.add(
+	// 		{
+	// 			fun: () => {
+	// 				splatStack.push(parseInt(Math.random() * 20) * 5);
+	// 			},
+	// 		},
+	// 		"fun"
+	// 	)
+	// 	.name("Random splats");
 
-	let sunraysFolder = gui.addFolder("Sunrays");
-	sunraysFolder
-		.add(config, "SUNRAYS")
-		.name("enabled")
-		.onFinishChange(updateKeywords);
-	sunraysFolder.add(config, "SUNRAYS_WEIGHT", 0.3, 1.0).name("weight");
+	// let bloomFolder = gui.addFolder("Bloom");
+	// bloomFolder
+	// 	.add(config, "BLOOM")
+	// 	.name("enabled")
+	// 	.onFinishChange(updateKeywords);
+	// bloomFolder.add(config, "BLOOM_INTENSITY", 0.1, 2.0).name("intensity");
+	// bloomFolder.add(config, "BLOOM_THRESHOLD", 0.0, 1.0).name("threshold");
 
-	gui.close();
+	// let sunraysFolder = gui.addFolder("Sunrays");
+	// sunraysFolder
+	// 	.add(config, "SUNRAYS")
+	// 	.name("enabled")
+	// 	.onFinishChange(updateKeywords);
+	// sunraysFolder.add(config, "SUNRAYS_WEIGHT", 0.3, 1.0).name("weight");
+
+	// gui.close();
 }
 
 function isMobile() {

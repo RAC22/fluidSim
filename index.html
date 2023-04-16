@@ -23,20 +23,21 @@
 			integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
 			crossorigin="anonymous"
 		/>
-		<script type="text/javascript" src="dat.gui.min.js"></script>
 		<link rel="stylesheet" href="./index.css" />
 	</head>
-	<!-- <header>
-		<button
-			class="btn btn-primary"
-			type="button"
-			data-bs-toggle="offcanvas"
-			data-bs-target="#offcanvasRight"
-			aria-controls="offcanvasRight"
-		>
-			Toggle static offcanvas
-		</button>
-	</header> -->
+	<header>
+		<div class="d-flex align-items-end flex-column mb-3">
+			<button
+				class="btn btn-secondary"
+				type="button"
+				data-bs-toggle="offcanvas"
+				data-bs-target="#offcanvasRight"
+				aria-controls="offcanvasRight"
+			>
+				Color fluid Options
+			</button>
+		</div>
+	</header>
 	<body>
 		<div class="container">
 			<section class="hidden">
@@ -50,10 +51,12 @@
 			tabindex="-1"
 			id="offcanvasRight"
 			aria-labelledby="offcanvasRightLabel"
+			data-bs-theme="dark"
+			data-bs-backdrop="false"
 		>
 			<div class="offcanvas-header">
 				<h5 class="offcanvas-title" id="offcanvasRightLabel">
-					Offcanvas right
+					ColorFluid sim Options
 				</h5>
 				<button
 					type="button"
@@ -62,7 +65,165 @@
 					aria-label="Close"
 				></button>
 			</div>
-			<div class="offcanvas-body">...</div>
+			<div class="offcanvas-body" id="offCanvasBody">
+				<label for="qualitySelect">Quality</label>
+				<select
+					id="qualitySelect"
+					class="form-select form-select-sm"
+					aria-label=".form-select-sm example"
+				>
+					<option value="very low">very low</option>
+					<option value="low">low</option>
+					<option value="medium">medium</option>
+					<option value="high">high</option>
+				</select>
+				<label for="simRes">Sim Resolution</label>
+				<select
+					id="simRes"
+					class="form-select form-select-sm"
+					aria-label=".form-select-sm example"
+				>
+					<option value="32">32</option>
+					<option value="64">64</option>
+					<option value="128">128</option>
+					<option value="256">256</option>
+				</select>
+				<label for="dissipation" class="form-label">Dissipation</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="4"
+					step="0.1"
+					id="dissipation"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<label for="deceleration" class="form-label">Deceleration</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="4"
+					step="0.1"
+					id="deceleration"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<label for="pressure" class="form-label">Pressure</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="1"
+					step="0.01"
+					id="pressure"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<label for="vorticity" class="form-label">Vorticity</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="50"
+					step="1"
+					id="vorticity"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<label for="size" class="form-label">Interaction Radius</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="1"
+					step="0.01"
+					id="size"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<div class="form-check form-switch">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						role="switch"
+						id="shading"
+					/>
+					<label class="form-check-label" for="shading">Shading</label>
+				</div>
+				<div class="form-check form-switch">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						role="switch"
+						id="colorful"
+					/>
+					<label class="form-check-label" for="colorful">Color Rotation</label>
+				</div>
+				<div class="form-check form-switch">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						role="switch"
+						id="paused"
+					/>
+					<label class="form-check-label" for="paused">Paused</label>
+				</div>
+				<h3>Bloom :</h3>
+				<div class="form-check form-switch">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						role="switch"
+						id="bloomEnable"
+					/>
+					<label class="form-check-label" for="bloomEnable">Enabled</label>
+				</div>
+				<label for="bloomIntensity" class="form-label">Intensity</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="2"
+					step="0.1"
+					id="bloomIntensity"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<label for="bloomThreshold" class="form-label">Threshold</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="1"
+					step="0.1"
+					id="bloomThreshold"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+				<h3>Sunrays :</h3>
+				<div class="form-check form-switch">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						role="switch"
+						id="sunraysEnable"
+					/>
+					<label class="form-check-label" for="sunraysEnable">Enabled</label>
+				</div>
+				<label for="sunrayWeight" class="form-label">Weight</label>
+				<output></output>
+				<input
+					type="range"
+					class="form-range col-4"
+					min="0"
+					max="1"
+					step="0.1"
+					id="sunrayWeight"
+					oninput="this.previousElementSibling.value = this.value"
+				/>
+			</div>
 		</div>
 		<script src="./content.js"></script>
 		<script src="./script.js"></script>
