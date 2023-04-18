@@ -240,7 +240,7 @@ function startGUI() {
 	shading.checked = config.SHADING;
 	shading.addEventListener(
 		"change",
-		(event) => (config.SHADING = event.target.checked)
+		(event) => ((config.SHADING = event.target.checked), updateKeywords())
 	);
 	let colorRotation = document.getElementById("colorful");
 	colorRotation.checked = config.COLORFUL;
@@ -258,7 +258,7 @@ function startGUI() {
 	bloomOn.checked = config.BLOOM;
 	bloomOn.addEventListener(
 		"change",
-		(event) => (config.BLOOM = event.target.checked)
+		(event) => ((config.BLOOM = event.target.checked), updateKeywords())
 	);
 	let bloomIntensity = document.getElementById("bloomIntensity");
 	bloomIntensity.value = config.BLOOM_INTENSITY;
@@ -276,7 +276,7 @@ function startGUI() {
 	sunraysOn.checked = config.SUNRAYS;
 	sunraysOn.addEventListener(
 		"change",
-		(event) => (config.SUNRAYS = event.target.checked)
+		(event) => ((config.SUNRAYS = event.target.checked), updateKeywords())
 	);
 	let sunraysWeight = document.getElementById("sunrayWeight");
 	sunraysWeight.value = config.SUNRAYS_WEIGHT;
