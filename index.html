@@ -15,7 +15,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="mobile-web-app-capable" content="yes" />
 
-		<title>Whoo colors</title>
+		<title>The Board</title>
 
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -40,10 +40,30 @@
 	</header>
 	<body>
 		<div class="container">
-			<section class="hidden">
-				<p>Scroll Or Play</p>
+			<section>
+				<table
+					class="table table-dark table-hover table-bordered table-striped"
+					id="boardTable"
+				>
+					<thead>
+						<tr id="headRow">
+							<th>Tank</th>
+							<th>Product</th>
+							<th>SG</th>
+							<th>Al2O3</th>
+							<th>Al</th>
+							<th>Basicity</th>
+							<th>AlumPercent</th>
+							<th>FreeAcid</th>
+							<th>pH</th>
+							<th>Chloride</th>
+							<th>Turbidity</th>
+							<th>Updated</th>
+						</tr>
+					</thead>
+					<tbody id="body"></tbody>
+				</table>
 			</section>
-			<section class="hidden"></section>
 		</div>
 		<canvas> </canvas>
 		<div
@@ -225,7 +245,7 @@
 				/>
 			</div>
 		</div>
-		<script src="./content.js"></script>
+		<script type="module" src="./content.js"></script>
 		<script src="./script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

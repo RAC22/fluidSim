@@ -1,24 +1,47 @@
-const sections = document.querySelectorAll("section");
-let currentSectionIndex = 0;
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-document.addEventListener("wheel", (event) => {
-	// Detect scroll direction
-	const direction = event.deltaY > 0 ? 1 : -1;
+const supabaseUrl = "https://gmmsahztdebjviekwsyz.supabase.co";
+const supabaseKey =
+	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtbXNhaHp0ZGVianZpZWt3c3l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg0NTc5NDAsImV4cCI6MjAxNDAzMzk0MH0.EXtUNhHzwo6nxL78oLmaWS3PzV2fToEaygGZ2BMUO84";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-	// Update current section index
-	currentSectionIndex += direction;
+let { data: Tanks, error } = await supabase.from("Tanks").select("*");
+console.log(error);
+console.log(Tanks);
 
-	// Make sure the index stays within the valid range
-	if (currentSectionIndex < 0) {
-		currentSectionIndex = 0;
-	} else if (currentSectionIndex >= sections.length) {
-		currentSectionIndex -= 1;
-	}
-	for (let i = 0; i < sections.length; i++) {
-		if (i == currentSectionIndex) {
-			sections[i].classList.remove("hidden");
-		} else {
-			sections[i].classList.add("hidden");
+let headRow = document.getElementById("headRow");
+let body = document.getElementById("body");
+
+const order = [
+	"Product",
+	"SG",
+	"Al2O3",
+	"Al",
+	"Basicity",
+	"AlumPercent",
+	"FreeAcid",
+	"pH",
+	"Chloride",
+	"Turbidity",
+	"Updated",
+];
+
+function buildTd(text, element) {}
+
+for (let tank of Tanks) {
+	let tr = document.createElement("tr");
+	let txt = tank.Name;
+	const name = document.createElement("th");
+	name.appendChild(document.createTextNode(txt));
+	tr.appendChild(name);
+	for (let column of order) {
+		const td = document.createElement("td");
+		txt = tank[column];
+		if (txt == null) {
+			txt = "  ";
 		}
+		td.appendChild(document.createTextNode(txt));
+		tr.appendChild(td);
 	}
-});
+	body.appendChild(tr);
+}

@@ -1,15 +1,6 @@
-@font-face {
-	font-family: "russo_oneregular";
-	src: url("./font/russoone-regular-webfont.woff2") format("woff2"),
-		url("./font/russoone-regular-webfont.woff") format("woff");
-	font-weight: normal;
-	font-style: normal;
-}
-
 html,
 body {
 	background-color: #000;
-	font-family: "russo_oneregular";
 }
 
 body {
@@ -38,7 +29,8 @@ div {
 	align-items: center;
 	block-size: fit-content;
 	width: fit-content;
-	margin-top: 48vh;
+	margin-top: 15vh;
+	margin-bottom: 100vh;
 }
 
 @keyframes fadeIn {
@@ -59,6 +51,9 @@ section {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	animation-name: fadeIn;
+	animation-duration: 2s;
+	opacity: 0.7;
 }
 
 .hidden {
