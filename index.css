@@ -63,6 +63,18 @@ header {
 	position: relative;
 	z-index: 1;
 }
-button {
+.optionsBtn {
 	opacity: 0.3;
+}
+
+#editModal {
+	position: absolute;
+	left: 10vw;
+	top: 1vh;
+	opacity: 100;
+	background-color: black;
+	padding: 30px;
+}
+.form-group {
+	padding: 10px;
 }

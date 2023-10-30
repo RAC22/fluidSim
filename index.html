@@ -28,7 +28,7 @@
 	<header>
 		<div class="d-flex align-items-end flex-column mb-3">
 			<button
-				class="btn btn-secondary"
+				class="btn btn-secondary optionsBtn"
 				type="button"
 				data-bs-toggle="offcanvas"
 				data-bs-target="#offcanvasRight"
@@ -41,6 +41,135 @@
 	<body>
 		<div class="container">
 			<section>
+				<div id="editModal" class="hidden">
+					<form id="updateForm">
+						<div class="form-group row">
+							<label for="Name" class="col-sm-2 col-form-label"></label>
+						</div>
+						<div class="form-group row">
+							<label for="Product" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input class="form-control data" id="Product" placeholder="" />
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="SG" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="SG"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Al2O3" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Al2O3"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Al" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Al"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Basicity" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Basicity"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="AlumPercent" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="AlumPercent"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="FreeAcid" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="FreeAcid"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="pH" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="pH"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Chloride" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Chloride"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Turbidity" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Turbidity"
+									placeholder=""
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="Updated" class="col-sm-5 col-form-label"></label>
+							<div class="col-sm-7">
+								<input
+									class="form-control data"
+									id="Updated"
+									placeholder=""
+									type="date"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-10">
+								<div class="btn btn-primary" id="update">Update</div>
+								<div class="btn btn-secondary" id="cancel">Cancel</div>
+							</div>
+						</div>
+					</form>
+				</div>
 				<table
 					class="table table-dark table-hover table-bordered table-striped"
 					id="boardTable"
