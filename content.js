@@ -19,6 +19,15 @@ const modal = document.getElementById("editModal");
 const body = document.getElementById("body");
 const updateBtn = document.getElementById("update");
 const cancelBtn = document.getElementById("cancel");
+const blurElement = document.getElementById("blurElement");
+blurElement.onclick = () => {
+	closeModal();
+};
+const al2o3 = document.getElementById("Al2O3");
+const al = document.getElementById("Al");
+al2o3.addEventListener("input", (e) => {
+	al.value = Math.round((parseFloat(al2o3.value) / 1.89) * 100) / 100;
+});
 
 const order = [
 	"Product",
@@ -42,7 +51,6 @@ async function update() {
 		let val = form.value;
 		tankMem[prop] = val;
 	}
-	console.log(tankMem);
 	const { data, error } = await supabase
 		.from("Tanks")
 		.update({
@@ -63,7 +71,7 @@ async function update() {
 	console.log(data);
 	console.log(error);
 	closeModal();
-	location.reload();
+	//location.reload();
 }
 function openModal(name) {
 	let tank = tanks.filter((e) => e.Name == name)[0];
@@ -84,14 +92,26 @@ function openModal(name) {
 			if (elem.children.length == 1) {
 				let input = elem.children[0];
 				input.value = placeHolder;
+				if (input.type == "date") {
+					let today = new Date();
+					let dd = String(today.getDate()).padStart(2, "0");
+					let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+					let yyyy = today.getFullYear();
+
+					today = yyyy + "-" + mm + "-" + dd;
+					console.log(today);
+					input.value = today;
+				}
 			}
 		}
 	}
 	modal.classList.remove("hidden");
+	blurElement.classList.remove("hidden");
 }
 function closeModal() {
 	tankMem = "";
 	modal.classList.add("hidden");
+	blurElement.classList.add("hidden");
 }
 cancelBtn.onclick = () => {
 	closeModal();
