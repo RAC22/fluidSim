@@ -11,7 +11,6 @@ async function getTanks() {
 	tanks = Tanks;
 }
 await getTanks();
-console.log(tanks);
 tanks.sort((a, b) => {
 	return a.Al2O3 - b.Al2O3;
 });
@@ -71,7 +70,7 @@ async function update() {
 	console.log(data);
 	console.log(error);
 	closeModal();
-	//location.reload();
+	location.reload();
 }
 function openModal(name) {
 	let tank = tanks.filter((e) => e.Name == name)[0];
@@ -99,7 +98,6 @@ function openModal(name) {
 					let yyyy = today.getFullYear();
 
 					today = yyyy + "-" + mm + "-" + dd;
-					console.log(today);
 					input.value = today;
 				}
 			}
@@ -136,6 +134,7 @@ for (let tank of tanks) {
 	}
 	let updateBtn = document.createElement("td");
 	updateBtn.setAttribute("tank", tank.Name);
+	updateBtn.style.cursor = "pointer";
 	txt = "Edit";
 	updateBtn.appendChild(document.createTextNode(txt));
 	updateBtn.onclick = () => {

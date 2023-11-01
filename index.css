@@ -65,6 +65,7 @@ header {
 	z-index: 1;
 }
 .optionsBtn {
+	position: fixed;
 	opacity: 0.3;
 }
 
